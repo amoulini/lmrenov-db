@@ -1,18 +1,21 @@
 services:
   mongo:
     image: mongo
-    restart: always
+    restart: unless-stopped
     env_file: stack.env
     volumes:
-      - ./mongo-data:/data/db
+      - mongo_data:/data/db
 
   fastapi-service:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
+    env_file: stack.env
     depends_on:
       - mongo
     ports:
       - "9441:8000"
-    env_file: stack.env
+
+volumes:
+  mongo_data:
