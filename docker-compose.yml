@@ -5,8 +5,6 @@ services:
     env_file: stack.env
     volumes:
       - didjo_mongo_db:/data/db
-    ports:
-      - "27017:27017"
 
   fastapi-service:
     build:
