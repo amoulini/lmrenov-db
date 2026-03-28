@@ -11,5 +11,5 @@ MONGO_PORT = os.environ.get("MONGO_PORT")
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
 
 url = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}:{MONGO_PORT}/"
-client = MongoClient()
+client = MongoClient(url)
 db = client[DATABASE_NAME]
