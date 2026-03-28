@@ -12,6 +12,16 @@ class Client():
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
+    
+    def check_mongo_health(self) -> bool:
+        health_url = f"{self.url}/health-db"
+        response = requests.get(health_url, headers=self.headers)
+
+        if response.status_code == 200:
+            return True
+        else:
+            print(f"MongoDB health check failed: {response.status_code} - {response.text}")
+            return False
 
     def create_collection(self, collection_name: str):
         collections = self.get_collections()
@@ -37,7 +47,6 @@ class Client():
 
         if response.status_code == 200:
             collections = response.json().get("collections", [])
-            print("Collections in database:", collections)
         else:
             print(f"Failed to fetch collections: {response.status_code} - {response.text}")
 

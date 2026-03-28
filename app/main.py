@@ -43,6 +43,21 @@ def verify_token(authorization: Optional[str] = Header(None)):
 def read_root():
     return {"message": "FastAPI MongoDB Gateway is running!"}
 
+
+@app.get("/health-db", dependencies=[Depends(verify_token)], tags=["Health"])
+def health_check():
+    try:
+        # The ping command is cheap and does not require auth on most setups
+        db.command("ping")
+        return {"status": "ok", "database": "reachable"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Database unreachable: {str(e)}"
+        )
+
+
+
 # --------------------------
 # Collection endpoints
 # --------------------------
