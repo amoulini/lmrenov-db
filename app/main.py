@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Depends, Header
 from pydantic import BaseModel
 from bson import ObjectId
@@ -7,7 +6,6 @@ from typing import Dict, Any, Optional
 
 from .db_connection import db
 
-load_dotenv("stack.env")
 API_TOKEN = os.environ.get("API_TOKEN")
 
 
