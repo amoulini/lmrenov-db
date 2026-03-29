@@ -54,6 +54,9 @@ class Bike(BaseModel):
     services: List[Service] = field(default_factory=list)
     pieces: List[Piece] = field(default_factory=list)
 
+    def print(self):
+        print(f"Bike {self.id}: '{self.label}' {self.type} - {self.prix}")
+
 # --------------------------
 # Helper to create datetime like Kotlin calendar
 # --------------------------

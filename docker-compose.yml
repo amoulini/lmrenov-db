@@ -1,11 +1,10 @@
 services:
-  mongo:
-    image: mongo
-    command: ["mongod", "--port", "9442"]
+  mariadb:
+    image: mariadb:12.3.1-ubi10-rc
     restart: unless-stopped
     env_file: stack.env
     volumes:
-      - didjo_mongo_db:/data/db
+      - didjo_mariadb_data:/var/lib/mysql
 
   fastapi-service:
     build:
@@ -14,18 +13,9 @@ services:
     restart: unless-stopped
     env_file: stack.env
     depends_on:
-      - mongo
+      - mariadb
     ports:
-      - "9441:8000"
-
-  # mongo-express:
-  #   image: mongo-express
-  #   restart: always
-  #   env_file: mongo-express.env
-  #   depends_on:
-  #     - mongo
-  #   ports:
-  #     - 8081:8081
+      - "9441:9441"
 
 volumes:
-  didjo_mongo_db:
+  didjo_mariadb_data:
